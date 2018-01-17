@@ -1,7 +1,7 @@
 {
     "name": "vue-clipboard-pack",
     "description": "A Vue.js directive to Copy or Cut",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "author": "uncleLian <771674109@qq.com>",
     "license": "MIT",
     "private": false,

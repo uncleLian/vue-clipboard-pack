@@ -6,77 +6,22 @@ if (!Clipboard) {
 
 var vueClipboard = {
     install: function(Vue) {
-        // 直接调用
+        // directive
+        Vue.directive('clipboard', directiveClipboard)
+        // direct
         Vue.prototype.$copyText = copyText
         Vue.prototype.$cutText = cutText
-        // 指令调用
-        Vue.directive('clipboard', directiveClipboard)
     }
 }
 
-/*
- * @params
- * text:         复制文本
- *
- * @callback
- * success:      成功回调
- * error:        失败回调
- */
-
-let copyText = (text) => {
-    let el = document.createElement('button')
-    return new Promise((resolve, reject) => {
-        const clipboard = new Clipboard(el, {
-            action: () => 'copy',
-            text: () => text
-        })
-        clipboard.on('success', (e) => {
-            resolve(e)
-            clipboard.destroy()
-        })
-        clipboard.on('error', (e) => {
-            reject(e)
-            clipboard.destroy()
-        })
-        el.click()
-    })
-}
-
-/*
- * @params
- * target: 剪切元素（只支持input 和 textarea）
- *
- * @callback
- * success:      成功回调
- * error:        失败回调
- */
-let cutText = (target) => {
-    let el = document.createElement('button')
-    return new Promise((resolve, reject) => {
-        const clipboard = new Clipboard(el, {
-            action: () => 'cut',
-            target: () => target
-        })
-        clipboard.on('success', (e) => {
-            resolve(e)
-            clipboard.destroy()
-        })
-        clipboard.on('error', (e) => {
-            reject(e)
-            clipboard.destroy()
-        })
-        el.click()
-    })
-}
-
+// directive
 /*
  * @driective
- * :copy     string        复制
- * :cut      string        剪切
- * :success  function      成功回调
- * :error    function      失败回调
+ * :copy       string        copy
+ * :cut        string        cut
+ * :success    function      success CallBack
+ * :error      function      error CallBack
  */
-
 let directiveClipboard = {
     bind: function(el, binding, vnode) {
         let vm = vnode.context
@@ -125,6 +70,61 @@ let directiveClipboard = {
             delete el.v_clipboard
         }
     }
+}
+
+// direct
+/*
+ * @params
+ * text:       string     copy text
+ *
+ * @callback
+ * success:    function
+ * error:      function
+ */
+let copyText = (text) => {
+    let el = document.createElement('button')
+    return new Promise((resolve, reject) => {
+        const clipboard = new Clipboard(el, {
+            action: () => 'copy',
+            text: () => text
+        })
+        clipboard.on('success', (e) => {
+            resolve(e)
+            clipboard.destroy()
+        })
+        clipboard.on('error', (e) => {
+            reject(e)
+            clipboard.destroy()
+        })
+        el.click()
+    })
+}
+
+/*
+ * @params
+ * target:      dom        Only for input and textarea
+ *
+ * @callback
+ * success:     function
+ * error:       function
+ */
+let cutText = (target) => {
+    let el = document.createElement('button')
+    return new Promise((resolve, reject) => {
+        const clipboard = new Clipboard(el, {
+            action: () => 'cut',
+            target: () => target
+        })
+        clipboard.on('success', (e) => {
+            resolve(e)
+            clipboard.destroy()
+        })
+        clipboard.on('error', (e) => {
+            reject(e)
+            clipboard.destroy()
+        })
+        el.click()
+    })
 }
 
 export default vueClipboard
