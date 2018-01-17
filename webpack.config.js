@@ -2,12 +2,12 @@ var path = require('path')
 var webpack = require('webpack')
 
 module.exports = {
-    entry: './src/index.js',
+    entry: './src/vue-clipboard-pack.js',
     output: {
         path: path.resolve(__dirname, './dist'),
         publicPath: '/dist/',
-        filename: 'index.min.js',
-        library: 'v-clipboard',
+        filename: 'vue-clipboard-pack.min.js',
+        library: 'vue-clipboard-pack',
         libraryTarget: 'umd'
     },
     module: {
@@ -66,7 +66,7 @@ if (process.env.NODE_ENV === 'production') {
             }
         }),
         new webpack.optimize.UglifyJsPlugin({
-            sourceMap: true,
+            sourceMap: false,
             compress: {
                 warnings: false
             }

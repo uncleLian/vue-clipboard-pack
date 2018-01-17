@@ -1,18 +1,91 @@
-# vue-clipboard
+# vue-clipboard-pack
 
-> A Vue.js project
+> A Vue.js directive to Copy or Cut
 
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
+## Install
+```
+$ npm install vue-clipboard-pack
 ```
 
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## Usage
+```
+import Vue from 'vue'
+import vueClipboard from 'vue-clipboard-pack'
+
+Vue.use(vueClipboard)
+```
+or
+```
+<script src="vue.min.js"></script>
+<!-- must place this line after vue.js -->
+<script src="vue-clipboard-pack.min.js"></script>
+```
+
+## Example
+```javascript
+<template>
+    <div id="example">
+    	<!-- directive -->
+    	<input type="text" v-model="directiveCopy">
+    	<button type="button" v-clipboard:copy="directiveCopy" v-clipboard:success="onSuccess" v-clipboard:error="onError">Copy!</button>
+
+    	<input type="text" v-model="directiveCut">
+    	<button type="button" v-clipboard:cut="directiveCut" v-clipboard:success="onSuccess" v-clipboard:error="onError">Cut!</button>
+
+    	<!-- direct -->
+    	<input type="text" v-model="directCopy">
+    	<button type="button" @click="onCopy(directCopy)">Copy!</button>
+
+    	<input id="cutInput" type="text" v-model="directCut">
+    	<button type="button" @click="onCut">Cut!</button>
+    </div>
+</template>
+<script>
+export default {
+    name: 'example',
+    data() {
+        return {
+            directiveCopy: 'directiveCopy text',
+            directiveCut: 'directiveCut text',
+            directCopy: 'directCopy text',
+            directCut: 'directCut text'
+        }
+    },
+    methods: {
+    	onSuccess(e) {
+    		console.log(e)
+    	},
+    	onError(err) {
+    		console.log(err)
+    	},
+    	onCopy(val) {
+    		this.$copyText(val)
+    		.then(res => {
+                console.log(res)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    	},
+    	onCut() {
+    		// Only for input and textarea
+    		let element = this.$el.querySelector('#cutInput')
+    		this.$cutText(element)
+    		.then(res => {
+                console.log(res)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    	}
+    }
+}
+</script>
+```
+
+
+## License
+
+[MIT](http://opensource.org/licenses/MIT)
+
+Copyright (c) 2018-present，uncleLian
