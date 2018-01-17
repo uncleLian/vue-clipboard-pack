@@ -1,11 +1,11 @@
 {
     "name": "vue-clipboard-pack",
     "description": "A Vue.js directive to Copy or Cut",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "author": "uncleLian <771674109@qq.com>",
     "license": "MIT",
     "private": false,
-    "main": "dist/index.min.js",
+    "main": "dist/vue-clipboard-pack.min.js",
     "scripts": {
         "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
         "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
